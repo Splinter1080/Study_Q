@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports.register = async (req, res, next) => {
   try {
-    const { firstName, lastName, email, password, age } = req.body;
+    const { firstName, lastName, email, password, age, phone } = req.body;
     //console.log(req.body)
 
     // Validate user input
@@ -28,6 +28,10 @@ module.exports.register = async (req, res, next) => {
       lastName,
       email: email.toLowerCase(),
       password: encryptedPassword,
+      age,
+      phone,
+      isReset: false,
+      isVerified: false,
     });
 
     // Create token
@@ -41,6 +45,7 @@ module.exports.register = async (req, res, next) => {
 
     // save user token
     user.token = token;
+    user.save()
 
     // return new user
     res.status(201).json(user);
@@ -48,7 +53,6 @@ module.exports.register = async (req, res, next) => {
     console.log(err);
   }
 };
-
 
 // -----------------------------------------------------------------------
 
@@ -76,10 +80,57 @@ module.exports.login = async (req, res) => {
       // save user token
       user.token = token;
 
-      // user
+      user.save()
       res.status(200).json(user);
     } else res.status(400).send("Invalid Credentials");
   } catch (err) {
     console.log(err);
+  }
+};
+
+//---------------------------------------------------------
+
+module.exports.confirm = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findOne({ _id: id });
+    user.isVerified = true;
+    user.save()
+    res.status(200).send("Verification Successfull");
+  } catch (err) {
+    res.status(400).send("Bad Request");
+  }
+};
+
+//---------------------------------------------------------
+
+module.exports.resetGet = async (req, res) => {
+  try {
+    const { id } = req.query;
+    console.log(id)
+    const user = await User.findOne({ _id: id });
+    user.isReset = true;
+    user.save()
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).send("Something went wrong");
+  }
+};
+
+//---------------------------------------------------------
+
+module.exports.resetPost = async (req, res) => {
+  try {
+    const { id , password} = req.body;
+    const user = await User.findOne({ _id: id });
+    if(user.isReset){
+     const encryptedPassword = await bcrypt.hash(password, 10);
+      user.isReset = false;
+      user.password = encryptedPassword
+    }
+    user.save()
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(400).send("Something went wrong");
   }
 };

@@ -4,24 +4,36 @@ const Schema = mongoose.Schema ;
 const UserSchema = new Schema({
     email: {
         type: String , 
-        required: true, 
+        //required: true, 
         unique: true
     } , 
     firstName:{
         type:String,
-        required: true
+        //required: true
     },
     lastName:{
         type:String,
-        required: true
+        //required: true
     },
     age:{
         type:Number,
-        required: true
+        //required: true
+    },
+    phone:{
+        type:Number,
+        //required: true
     },
     password:{
         type:String,
-        required: true
+        //required: true
+    },
+    isVerified:{
+        type:Boolean,
+        //required:true
+    },
+    isReset:{
+        type:Boolean,
+       // required:true
     },
     token: { type: String },
 });

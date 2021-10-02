@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+require('dotenv').config()
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 var cors = require('cors')
@@ -57,7 +58,6 @@ var io = require("socket.io")(http);
 
 
 // -----------------------------------
-
 
 app.get('/', corsAllow.corsWithOptions, (req, res) => {
    
