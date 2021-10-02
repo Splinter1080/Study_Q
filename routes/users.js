@@ -10,4 +10,5 @@ router.route("/confirm").get(users.confirm);
 
 router.route("/reset").get(users.resetGet).post(users.resetPost);
 
+
 module.exports = router;

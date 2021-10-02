@@ -4,12 +4,12 @@ const Schema = mongoose.Schema ;
 const UserSchema = new Schema({
     email: {
         type: String , 
-        //required: true, 
+        required: true, 
         unique: true
     } , 
     firstName:{
         type:String,
-        //required: true
+        required: true
     },
     lastName:{
         type:String,
@@ -17,7 +17,7 @@ const UserSchema = new Schema({
     },
     age:{
         type:Number,
-        //required: true
+        required: true
     },
     phone:{
         type:Number,
@@ -25,7 +25,7 @@ const UserSchema = new Schema({
     },
     password:{
         type:String,
-        //required: true
+        required: true
     },
     isVerified:{
         type:Boolean,
@@ -34,6 +34,9 @@ const UserSchema = new Schema({
     isReset:{
         type:String,
        // required:true
+    },
+    isPro:{
+       type:Boolean
     },
     token: { type: String },
 });

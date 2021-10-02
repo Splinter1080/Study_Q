@@ -41,6 +41,7 @@ module.exports.register = async (req, res, next) => {
       phone,
       isReset: false,
       isVerified: false,
+      isPro: false
     });
 
     // Create token
