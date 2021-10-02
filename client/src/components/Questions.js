@@ -21,11 +21,11 @@ export default function Questions() {
     else setIndex(index + 1);
   }
   return (
-    <Card>
+    <Card style={{margin:"10px"}}>
       {!completed && (
         <Card.Content>
           <Card.Header>{arr[index]}</Card.Header>
-          <Card.Description>
+          <Card.Description >
             <Form>
               <Form.Field>
                 <Checkbox

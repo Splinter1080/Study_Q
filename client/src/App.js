@@ -1,26 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbar from './components/Navbar';
-import Questions from './components/Questions';
-import Login from './components/Login';
-import { Container, Grid, Segment } from 'semantic-ui-react';
-import SignUp from './components/SignUp';
-import Chat from './components/Chat';
-
+import { Route,   BrowserRouter as Router  , Switch } from "react-router-dom";
+import { Header } from "semantic-ui-react";
+import "./App.css";
+import ChatScreen from "./screens/ChatScreen";
+import Dashboard from "./screens/Dashboard";
 
 function App() {
   return (
-    <>
-   <Navbar/>
-   <Container >
-     <Grid stretched centered>
-<Chat/>
-   </Grid>
-   </Container>
-{/* <Questions/> */}
-   </>
-  )
-  
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Dashboard />
+        </Route>
+        <Route exact path="/chat">
+          <ChatScreen/>
+        </Route>
+        <Route path="*">
+          <Header content="404 Not found" />
+        </Route>
+      </Switch>
+    </Router>
+
+    //     <>
+    //    <Navbar/>
+    //    <Container >
+    //      <Grid stretched centered>
+    // <Dashboard/>
+    //    </Grid>
+    //    </Container>
+    //    </>
+  );
 }
 
 export default App;
