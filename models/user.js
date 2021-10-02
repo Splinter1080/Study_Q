@@ -32,7 +32,7 @@ const UserSchema = new Schema({
         //required:true
     },
     isReset:{
-        type:Boolean,
+        type:String,
        // required:true
     },
     token: { type: String },

@@ -6,7 +6,7 @@ router.route("/register").post(users.register);
 
 router.route("/login").post(users.login);
 
-router.route("/confirm/:id").get(users.confirm);
+router.route("/confirm").get(users.confirm);
 
 router.route("/reset").get(users.resetGet).post(users.resetPost);
 
