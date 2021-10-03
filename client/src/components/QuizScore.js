@@ -4,12 +4,12 @@ import { Grid, Header, Statistic, Label } from "semantic-ui-react";
 export default function QuizScore() {
   return (
     <>
-      <Header content="Score" />
+      <Header content="Next survey on" />
       <Statistic.Group horizontal>
         <Statistic>
-          <Statistic.Value>5</Statistic.Value>
+          <Statistic.Value>5/10/2021</Statistic.Value>
           <Statistic.Label>
-              <Label content="Good" color="green"/>
+              <Label content="Get ready!" color="green"/>
           </Statistic.Label>
         </Statistic>
       </Statistic.Group>

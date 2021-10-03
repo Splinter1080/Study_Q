@@ -4,13 +4,18 @@ const Schema = mongoose.Schema;
 const TicketSchema = new Schema({
   userId: {
     type: String,
-    required: true,
   },
-  timestamp,
   amount: {
     type: Number,
     required: true,
   },
+  orderId:{
+    type: String,
+  },
+  email:{
+      type:String
+  }
+
 });
 
 module.exports = mongoose.model("Ticket", TicketSchema);

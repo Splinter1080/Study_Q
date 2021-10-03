@@ -6,7 +6,10 @@ import Login from "./components/Login";
 import ChatScreen from "./screens/ChatScreen";
 import Dashboard from "./screens/Dashboard";
 import EmailRecoveryScreen from "./screens/EmailRecoveryScreen";
+import GroupScreen from "./screens/GroupScreen";
+import JoinGroupScreen from "./screens/JoinGroupScreen";
 import LoginScreen from "./screens/LoginScreen";
+import PaymentScreen from "./screens/PaymentScreen";
 import ResetPasswordScreen from "./screens/ResetPasswordScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import VideoCallScreen from "./screens/VideoCallScreen";
@@ -36,8 +39,14 @@ function App() {
         <Route exact path="/video">
           <VideoCallScreen/>
         </Route>
+        <Route exact path="/payment">
+          <PaymentScreen/>
+        </Route>
         <Route exact path="/create">
-          {/* <GroupCreateScreen/> */}
+         <GroupScreen/>
+        </Route>
+        <Route exact path="/join">
+         <JoinGroupScreen/>
         </Route>
         <Route path="*">
           <Header content="404 Not found" />

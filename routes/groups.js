@@ -8,9 +8,14 @@ router.route("/join").get(groups.join);
 
 router.route("/groups").get(groups.groups);
 
+router.route("/oneGroup").get(groups.oneGroup);
+
+
 router.route("/task").get(groups.task);
 
 router.route("/messages").get(groups.message);
+
+router.route("/payment").post(groups.payment);
 
 
 module.exports = router;

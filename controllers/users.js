@@ -9,11 +9,18 @@ var smtpTransport = nodemailer.createTransport("SMTP", {
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
   },
-});
+  port:465,
+  secure: true, // true for 465, false for other ports
+  logger: true,
+  debug: true,
+  secureConnection: false,
+  tls:{
+    rejectUnAuthorized:true
+}});
 
 module.exports.register = async (req, res, next) => {
   try {
-    const { firstName, lastName, email, password, age, phone } = req.body;
+    const { firstName, lastName, email, password, age, phone ,security} = req.body;
     //console.log(req.body)
 
     // Validate user input
@@ -41,7 +48,8 @@ module.exports.register = async (req, res, next) => {
       phone,
       isReset: false,
       isVerified: false,
-      isPro: false
+      isPro: false,
+      security
     });
 
     // Create token
@@ -135,9 +143,8 @@ module.exports.confirm = async (req, res) => {
 
 module.exports.resetGet = async (req, res) => {
   try {
-    const { id } = req.query;
-    console.log(id);
-    const user = await User.findOne({ _id: id });
+    const { email } = req.query;
+    const user = await User.findOne({ email });
     const token = jwt.sign(
       { user_id: user._id },
       process.env.TOKEN_KEY || "a56s7ausjh",
@@ -146,26 +153,6 @@ module.exports.resetGet = async (req, res) => {
       }
     );
     user.isReset = token;
-
-    var link = "http://" + req.get("host") + "/reset?id=" + user._id;
-    mailOptions = {
-      to: user.email,
-      subject: "Request to change password",
-      html:
-        "We recieved a request to change password,<br> <br><a href=" +
-        link +
-        "> Click on the link to change your password</a><br>",
-    };
-
-    console.log(mailOptions);
-    smtpTransport.sendMail(mailOptions, function (error, response) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Message sent: " + response.message);
-      }
-    });
-
     user.save();
     res.status(200).json(user);
   } catch (err) {
@@ -176,11 +163,12 @@ module.exports.resetGet = async (req, res) => {
 
 //---------------------------------------------------------
 
-module.exports.resetPost = async (req, res) => {
+module.exports.resetPassword = async (req, res) => {
   try {
-    const { id, password, isReset } = req.body;
+    const { id, password, isReset,security } = req.body;
+    console.log(req.body)
     const user = await User.findOne({ _id: id });
-    if (user.isReset != null) {
+    if (user.isReset != null && security == user.security) {
       try {
         const decoded = jwt.verify(
           isReset,

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { Card, Form, Checkbox, Icon } from "semantic-ui-react";
+import { Card, Form, Checkbox, Icon, Label } from "semantic-ui-react";
 import { api } from "../api";
 
 //add warning,error,success https://react.semantic-ui.com/collections/form/#states-field-error-label
@@ -15,11 +15,14 @@ export default function SignUp() {
   const [email, setEmail] = useState(""); //2
   const [age, setAge] = useState(""); //3
   const [password, setPassword] = useState(""); //4
+  const [security, setSecurity] = useState(""); //4
 
   //add confirm password
 
   const [valEmail, setValEmail] = useState(true);
   const [valPassword, setValPassword] = useState(true);
+  const [valSecurity, setValSecurity] = useState(true);
+
   const [valFirstName, setValFirstName] = useState(true);
   const [valLastName, setValLastName] = useState(true);
   const [valAge, setValAge] = useState(false);
@@ -66,6 +69,7 @@ export default function SignUp() {
     else if (type == 2) setEmail(val);
     else if (type == 3) setAge(val);
     else if (type == 4) setPassword(val);
+    else if (type == 5) setSecurity(val);
 
     if (incorrect) {
       setIncorrect(false);
@@ -86,6 +90,7 @@ export default function SignUp() {
           age,
           firstName,
           lastName,
+          security
         });
         localStorage.setItem("jwt", response.data.token);
         localStorage.setItem("userId", response.data._id);
@@ -179,6 +184,20 @@ export default function SignUp() {
                 type="password"
                 value={password}
                 onChange={(e) => updateValue(e.target.value, 4)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <Label color="red">Security Question</Label> <br/>
+              <Form.Input
+                error={
+                  incorrect && !valSecurity
+                    ? { content: "Enter an answer", pointing: "above" }
+                    : false
+                }
+                placeholder={"What is you favourite food?"}
+                type="text"
+                value={security}
+                onChange={(e) => updateValue(e.target.value, 5)}
               />
             </Form.Field>
             <Form.Field>

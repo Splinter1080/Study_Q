@@ -8,7 +8,9 @@ router.route("/login").post(users.login);
 
 router.route("/confirm").get(users.confirm);
 
-router.route("/reset").get(users.resetGet).post(users.resetPost);
+router.route("/reset").get(users.resetGet)
+router.route("/resetPassword").post(users.resetPassword)
+
 
 
 module.exports = router;

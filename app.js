@@ -16,7 +16,7 @@ const groupRoutes = require('./routes/groups')
 
 
 const app = express();
-app.options(cors())
+app.use(cors())
 app.use(helmet({ contentSecurityPolicy: false }))
 app.use(express.json());
 app.use("/", userRoutes);

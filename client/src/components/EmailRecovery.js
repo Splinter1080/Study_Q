@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { Card, Form, Checkbox, Button } from "semantic-ui-react";
+import { Card, Form, Checkbox, Message } from "semantic-ui-react";
+import { api } from "../api";
+import ResetPassword from "./Reset";
 
 //add warning,error,success https://react.semantic-ui.com/collections/form/#states-field-error-label
 
@@ -7,6 +10,9 @@ export default function EmailRecovery() {
   const [email, setEmail] = useState(""); //0
   const [valEmail, setValEmail] = useState("");
   const [incorrect, setIncorrect] = useState(false);
+  const [invalid, setInvalid] = useState(false);
+  const [submit, setSubmit] = useState(false);
+  const [user, setUser] = useState({});
 
   const validateEmail = () => {
     const re =
@@ -15,22 +21,38 @@ export default function EmailRecovery() {
     return re.test(String(email).toLowerCase());
   };
 
-
-
   const validation = () => {
     validateEmail();
   };
 
   const updateValue = (val, type) => {
     if (type == 0) setEmail(val);
+    if (invalid) {
+      setInvalid(false);
+    }
     if (incorrect) {
       setIncorrect(false);
     }
+    if (submit) {
+      setSubmit(false);
+    }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     validation();
-    setIncorrect(!(valEmail));
+    setIncorrect(!valEmail);
+    if (valEmail) {
+      try {
+        const response = await axios.get(api.resetGet + email);
+        setUser(response.data)
+        //  history.push("/");
+        setSubmit(true);
+        console.log("done");
+      } catch (e) {
+        setInvalid(true);
+        console.log(e);
+      }
+    }
     console.log(email);
   };
 
@@ -41,7 +63,7 @@ export default function EmailRecovery() {
         <Card.Description>
           <Form>
             <Form.Field>
-            <Form.Input
+              <Form.Input
                 error={
                   incorrect && !valEmail
                     ? { content: "Enter a valid email", pointing: "above" }
@@ -54,19 +76,28 @@ export default function EmailRecovery() {
                 }}
               />
             </Form.Field>
+            {submit && <ResetPassword user={user} />}
 
-            
-            
-            <Form.Field>
-              <Form.Button
-                content="Submit"
-                color="blue"
-                compact
-                fluid
-                onClick={handleSubmit}
-              />
-            </Form.Field>
+            {!submit && (
+              <Form.Field>
+                <Form.Button
+                  content="Submit"
+                  color="blue"
+                  compact
+                  fluid
+                  onClick={handleSubmit}
+                />
+              </Form.Field>
+            )}
           </Form>
+         
+          {invalid && (
+            <Message
+              error
+              header="Invalid Credentials"
+              //  content='You can only sign up for an account once with a given e-mail address.'
+            />
+          )}
         </Card.Description>
       </Card.Content>
     </Card>

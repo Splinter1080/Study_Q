@@ -12,14 +12,11 @@ import Navbar from "../components/Navbar";
 
 //add warning,error,success https://react.semantic-ui.com/collections/form/#states-field-error-label
 
-export default function VideoCallScreen() {
+export default function PaymentScreen() {
   return (
     <>
       <iframe
-        src={`https://zoom-clone-codefury.herokuapp.com/${localStorage.getItem(
-          "groupId"
-        )}`}
-        allow="camera;microphone"
+        src={`https://romantic-panini-6262e3.netlify.app/`}
         style={{
           position: "fixed",
           top: "0",
@@ -37,7 +34,6 @@ export default function VideoCallScreen() {
       >
         Your browser doesn't support iframes
       </iframe>
-      {/* <iframe height="100%" width="100%"  title="W3Schools Free Online Web Tutorials"></iframe> */}
     </>
   );
 }

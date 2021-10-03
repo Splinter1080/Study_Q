@@ -1,4 +1,5 @@
 import React from 'react';
+import { Notifications } from 'react-push-notification';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
@@ -7,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
+            <Notifications />
     <App />
   </React.StrictMode>,
   document.getElementById('root')

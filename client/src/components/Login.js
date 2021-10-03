@@ -47,7 +47,7 @@ export default function Login() {
     else if (type == 1) setPassword(val);
 
     if(invalid){
-      setInvalid(true)
+      setInvalid(false)
     }
 
     if (incorrect) {
@@ -127,12 +127,13 @@ export default function Login() {
             <Link to="/recovery">
               <Header content="Forgot Password?" color="blue" size="small" />
             </Link>
-        { invalid &&   <Message
+  
+          </Form>
+          { invalid &&   <Message
       error
       header='Invalid Credentials'
     //  content='You can only sign up for an account once with a given e-mail address.'
     />}
-          </Form>
         </Card.Description>
       </Card.Content>
     </Card>

@@ -67,7 +67,7 @@ export default function Questions() {
       )}
 
       {completed && (
-        <Card.Description>Thank for taking our survey!</Card.Description>
+        <Card.Description>Completed!</Card.Description>
       )}
     </Card>
   );

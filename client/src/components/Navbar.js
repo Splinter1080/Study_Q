@@ -22,21 +22,34 @@ export default function Navbar() {
   return (
     <Segment color="teal">
       <Menu secondary stackable>
-        <Menu.Item
-          name="home"
-          active={activeItem === "home"}
-          onClick={handleItemClick}
-        />
-        <Menu.Item
-          name="join group"
-          active={activeItem === "join group"}
-          onClick={handleItemClick}
-        />
-        <Menu.Item
-          name="create group"
-          active={activeItem === "create group"}
-          onClick={handleItemClick}
-        />
+        <Link to="/">
+          <Menu.Item
+            name="home"
+            active={activeItem === "home"}
+            onClick={handleItemClick}
+          />
+        </Link>
+        <Link to="/join">
+          <Menu.Item
+            name="join group"
+            active={activeItem === "join group"}
+            onClick={handleItemClick}
+          />
+        </Link>
+        <Link to="/create">
+          <Menu.Item
+            name="create group"
+            active={activeItem === "create group"}
+            onClick={handleItemClick}
+          />
+        </Link>
+        <Link to="/payment">
+          <Menu.Item
+            name="payment"
+            active={activeItem === "payment"}
+            onClick={handleItemClick}
+          />
+        </Link>
         <Menu.Menu position="right">
           {/* <Menu.Item>
             <Input icon="search" placeholder="Search..." />

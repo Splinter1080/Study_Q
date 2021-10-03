@@ -18,7 +18,7 @@ export default function Assistant() {
           <Card.Header>Virtual Assistant</Card.Header>
           <Card.Description >
           <ReactTypingEffect
-        text={["Good Job! Keep going"]}
+        text={["Good Job! Keep going","In a world full of rotis you are my paratha <3","You have been doing great!","You are awesome :)","You can do it!","You never quit!"]}
       />
           </Card.Description>
         </Card.Content>

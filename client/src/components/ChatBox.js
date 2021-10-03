@@ -1,32 +1,50 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 import { Button, Comment, Form, Segment } from "semantic-ui-react";
 import { io } from "socket.io-client";
+import { api } from "../api";
+import addNotification from 'react-push-notification';
+
 
 const socket = io.connect("http://localhost:3000");
 
-export default function ChatBox() {
-  const [name, setName] = useState("Supreet");
+export default function ChatBox({group}) {
+  const [name, setName] = useState(localStorage.getItem("name"));
   const [message, setMessage] = useState("");
-  const [userId, setUserId] = useState("test");
-  const [groupId, setGroupId] = useState("not");
+  const [userId, setUserId] = useState(localStorage.getItem("userId"));
+  const [groupId, setGroupId] = useState(localStorage.getItem("groupId"));
+  const [first,setFirst] = useState(true)
 
-  const [messageList, setMessageList] = useState([
-    {
-      message:
-        " The hours, minutes and seconds stand as visible reminders that your effort put them all there.",
-      name: "Anshika",
-    },
-    {
-      message:
-        " Preserve until your next run, when the watch lets you see how Impermanent your efforts are.",
-      name: "Jayshree",
-    },
-  ]);
+  const [messageList, setMessageList] = useState([]);
+
+  const getMessages = async ()=>{
+    try{
+const res= await axios.get(api.getMessages+localStorage.getItem("groupId"))
+console.log(res.data)
+setMessageList(res.data)
+
+    }catch(e){
+      console.log(e)
+    }
+  }
 
   useEffect(() => {
+    if(first){
+    getMessages()
+    setFirst(false)
+    }
     socket.on('message',({ name, message,userId,groupId })=>{
       setMessageList([...messageList,{ name, message }]);
+      if(userId != localStorage.getItem("userId")){
+      addNotification({
+        title: 'Notification',
+        message: 'You have a new message',
+        theme: 'darkblue',
+        native: true // when using native, your OS will handle theming.
+    });
+  }
     })
     var objDiv = document.getElementById("scroll");
     objDiv.scrollTop = objDiv.scrollHeight;
@@ -45,7 +63,7 @@ export default function ChatBox() {
       console.log(e);
     }
 
-    // setMessageList([...messageList,{ name, message }]);
+     //setMessageList([...messageList,{ name, message }]);
     console.log(messageList)
     setMessage("");
     //setName('')
@@ -83,6 +101,15 @@ export default function ChatBox() {
           primary
           onClick={onSend}
         />
+        <Link to="/video">
+        <Button
+          style={{ marginTop: "10px" }}
+          content="Video Call"
+          labelPosition="right"
+          icon="video"
+          primary
+        />
+        </Link>
       </Form>
     </Comment.Group>
   );
