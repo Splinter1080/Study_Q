@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
 
 //----------------------------------------------
 
-const dbUrl = 'mongodb+srv://sans:sans@codefury.gkzbe.mongodb.net/codefury4?retryWrites=true&w=majority';
+const dbUrl = process.env.dbUrl;
 
 
 mongoose.connect(dbUrl, {
