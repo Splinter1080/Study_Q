@@ -3,7 +3,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { Button, Comment, Form, Segment } from "semantic-ui-react";
 import { io } from "socket.io-client";
 
-const socket = io.connect("http://localhost:3000");
+const socket = io.connect("https://study-q-server.herokuapp.com");
 
 export default function ChatBox() {
   const [name, setName] = useState("Supreet");
@@ -25,22 +25,22 @@ export default function ChatBox() {
   ]);
 
   useEffect(() => {
-    socket.on('message',({ name, message,userId,groupId })=>{
-      setMessageList([...messageList,{ name, message }]);
+    socket.on('message', ({ name, message, userId, groupId }) => {
+      setMessageList([...messageList, { name, message }]);
     })
     var objDiv = document.getElementById("scroll");
     objDiv.scrollTop = objDiv.scrollHeight;
-  setUserId(localStorage.getItem("userId"))
-  setGroupId(localStorage.getItem("groupId"))
+    setUserId(localStorage.getItem("userId"))
+    setGroupId(localStorage.getItem("groupId"))
     //-----------------------------------------
 
-    socket.emit("join", ({ name, message,userId,groupId }));
+    socket.emit("join", ({ name, message, userId, groupId }));
 
   }, [messageList]);
 
   const onSend = () => {
     try {
-      socket.emit("sendMessage", ({ name, message,userId,groupId }));
+      socket.emit("sendMessage", ({ name, message, userId, groupId }));
     } catch (e) {
       console.log(e);
     }
@@ -54,27 +54,27 @@ export default function ChatBox() {
   return (
     <Comment.Group>
       <Segment id="scroll" style={{ overflow: "auto", maxHeight: "80%" }}>
-        {messageList.map((key,index)=>(
-           (
+        {messageList.map((key, index) => (
+          (
             <Comment key={index}>
-            <Comment.Avatar
-              as="a"
-              src="https://react.semantic-ui.com/images/avatar/small/joe.jpg"
-            />
-            <Comment.Content>
-              <Comment.Author>{key.name}</Comment.Author>
-              <Comment.Text>
-               {key.message}
-              </Comment.Text>
-            </Comment.Content>
-          </Comment>
-  
+              <Comment.Avatar
+                as="a"
+                src="https://react.semantic-ui.com/images/avatar/small/joe.jpg"
+              />
+              <Comment.Content>
+                <Comment.Author>{key.name}</Comment.Author>
+                <Comment.Text>
+                  {key.message}
+                </Comment.Text>
+              </Comment.Content>
+            </Comment>
+
           )
         ))}
-       
+
       </Segment>
       <Form reply>
-        <TextareaAutosize minRows={1} onChange={(e)=>setMessage(e.target.value)} value={message} />
+        <TextareaAutosize minRows={1} onChange={(e) => setMessage(e.target.value)} value={message} />
         <Button
           style={{ marginTop: "10px" }}
           content="Send"
