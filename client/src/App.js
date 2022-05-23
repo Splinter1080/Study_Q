@@ -1,4 +1,4 @@
-import { Route,   BrowserRouter as Router  , Switch } from "react-router-dom";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { Header } from "semantic-ui-react";
 import "./App.css";
 import EmailRecovery from "./components/EmailRecovery";
@@ -22,31 +22,31 @@ function App() {
           <Dashboard />
         </Route>
         <Route exact path="/login">
-          <LoginScreen/>
+          <LoginScreen />
         </Route>
         <Route exact path="/register">
-          <SignUpScreen/>
+          <SignUpScreen />
         </Route>
         <Route exact path="/chat">
-          <ChatScreen/>
+          <ChatScreen />
         </Route>
         <Route exact path="/recovery">
-          <EmailRecoveryScreen/>
+          <EmailRecoveryScreen />
         </Route>
         <Route exact path="/reset">
-          <ResetPasswordScreen/>
+          <ResetPasswordScreen />
         </Route>
         <Route exact path="/video">
-          <VideoCallScreen/>
+          <VideoCallScreen />
         </Route>
         <Route exact path="/payment">
-          <PaymentScreen/>
+          <PaymentScreen />
         </Route>
         <Route exact path="/create">
-         <GroupScreen/>
+          <GroupScreen />
         </Route>
         <Route exact path="/join">
-         <JoinGroupScreen/>
+          <JoinGroupScreen />
         </Route>
         <Route path="*">
           <Header content="404 Not found" />
@@ -54,8 +54,8 @@ function App() {
       </Switch>
     </Router>
 
-     
-   
+
+
   );
 }
 

@@ -9,18 +9,20 @@ var smtpTransport = nodemailer.createTransport("SMTP", {
     user: process.env.EMAIL,
     pass: process.env.PASSWORD,
   },
-  port:465,
+  port: 465,
   secure: true, // true for 465, false for other ports
   logger: true,
   debug: true,
   secureConnection: false,
-  tls:{
-    rejectUnAuthorized:true
-}});
+  tls: {
+    rejectUnAuthorized: true
+  }
+});
 
 module.exports.register = async (req, res, next) => {
   try {
-    const { firstName, lastName, email, password, age, phone ,security} = req.body;
+    console.log("Resgister working?");
+    const { firstName, lastName, email, password, age, phone, security } = req.body;
     //console.log(req.body)
 
     // Validate user input
@@ -165,7 +167,7 @@ module.exports.resetGet = async (req, res) => {
 
 module.exports.resetPassword = async (req, res) => {
   try {
-    const { id, password, isReset,security } = req.body;
+    const { id, password, isReset, security } = req.body;
     console.log(req.body)
     const user = await User.findOne({ _id: id });
     if (user.isReset != null && security == user.security) {

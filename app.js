@@ -23,7 +23,7 @@ app.use("/", userRoutes);
 app.use("/group", groupRoutes);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.use(express.static(path.join(__dirname, 'public'))); 
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type, Accept,Authorization,Origin");
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
 
 //----------------------------------------------
 
-const dbUrl = 'mongodb+srv://sans:sans@codefury.gkzbe.mongodb.net/codefury4?retryWrites=true&w=majority';
+const dbUrl = 'mongodb+srv://botstest1080:splinter1234@cluster0.aapex.mongodb.net/study_q?retryWrites=true&w=majority';
 
 
 mongoose.connect(dbUrl, {
@@ -56,45 +56,47 @@ db.once("open", () => {
 
 
 var http = require("http").Server(app);
-var io = socketio(http,{cors: {origin: "*"}});
+var io = socketio(http, { cors: { origin: "*" } });
 
 // half baked chat qq
 
-const createMessage = async (name,message,userId,groupId)=>{
-    try{
-const chat = await Chat.create({
-    name,message,userId,groupId
-})
-    }catch(e){
-       // console.log(e)
+const createMessage = async (name, message, userId, groupId) => {
+    try {
+        const chat = await Chat.create({
+            name, message, userId, groupId
+        })
+    } catch (e) {
+        // console.log(e)
     }
 }
 
-io.on("connection",(socket)=>{
-    socket.on("message",({name,message,userId,groupId})=>{
-    
-        io.emit("message",{name,message,userId,groupId})
+io.on("connection", (socket) => {
+    socket.on("message", ({ name, message, userId, groupId }) => {
+
+        io.emit("message", { name, message, userId, groupId })
     })
 
-    socket.on("join",({name,message,userId,groupId})=>{
+    socket.on("join", ({ name, message, userId, groupId }) => {
         socket.join(groupId)
     })
 
-    socket.on("sendMessage",({name,message,userId,groupId})=>{
-        createMessage(name,message,userId,groupId)
-        console.log( name,message,userId,groupId)
+    socket.on("sendMessage", ({ name, message, userId, groupId }) => {
+        createMessage(name, message, userId, groupId)
+        console.log(name, message, userId, groupId)
 
-        io.to(groupId).emit("message",{name,message,userId,groupId})
+        io.to(groupId).emit("message", { name, message, userId, groupId })
     })
 
     console.log("user connected")
 
-    socket.on("disconnect",()=>{
+    socket.on("disconnect", () => {
         console.log("user has left")
     })
 })
 
-
+app.get('/', (req, res) => {
+    res.send("Hello World!");
+})
 const port = process.env.PORT || 3000;
 
 var server = http.listen(port, () => {

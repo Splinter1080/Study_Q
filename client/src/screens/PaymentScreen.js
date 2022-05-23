@@ -16,7 +16,7 @@ export default function PaymentScreen() {
   return (
     <>
       <iframe
-        src={`https://romantic-panini-6262e3.netlify.app/`}
+        src={`https://willowy-sprinkles-26c7e6.netlify.app`}
         style={{
           position: "fixed",
           top: "0",
